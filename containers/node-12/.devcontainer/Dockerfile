@@ -19,7 +19,7 @@ ENV PATH=${NVM_DIR}/current/bin:${PATH}
 # Options for common package install script
 ARG INSTALL_ZSH="true"
 ARG UPGRADE_PACKAGES="true"
-ARG COMMON_SCRIPT_SOURCE="https://raw.githubusercontent.com/reyala/vscode-dev-containers/master/script-library/debian-setup.sh?token=AMSAK52GPXEXL6WE733WCQ27AC7JW"
+ARG COMMON_SCRIPT_SOURCE="https://raw.githubusercontent.com/reyala/vscode-dev-containers/master/script-library/debian-setup.sh"
 ARG COMMON_SCRIPT_SHA="dev-mode"
 
 # Configure apt and install packages
