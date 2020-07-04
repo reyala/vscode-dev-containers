@@ -1,21 +1,26 @@
+#-------------------------------------------------------------------------------------------------------------
+# Copyright (c) Reyala PVT LTD. All rights reserved.
+# Licensed under the MIT License.
+#-------------------------------------------------------------------------------------------------------------
+
 FROM node:12
 
 ARG USERNAME=node
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 
-ARG VUE_CLI_VERSION="4.4.6"
-
-ENV NPM_GLOBAL=/usr/local/share/npm-global
+ARG NPM_GLOBAL=/usr/local/share/npm-global
 ENV PATH=${PATH}:${NPM_GLOBAL}/bin
 ENV NVM_DIR=/usr/local/share/nvm
+# Have nvm create a "current" symlink and add to path
+ENV NVM_SYMLINK_CURRENT=true 
+ENV PATH=${NVM_DIR}/current/bin:${PATH}
 
 # Options for common package install script
 ARG INSTALL_ZSH="true"
 ARG UPGRADE_PACKAGES="true"
+ARG COMMON_SCRIPT_SOURCE="https://raw.githubusercontent.com/reyala/dev-containers/master/script-library/debian-setup.sh"
 ARG COMMON_SCRIPT_SHA="dev-mode"
-
-COPY common-setup.sh /tmp/common-setup.sh
 
 # Configure apt and install packages
 RUN apt-get update \
@@ -23,8 +28,8 @@ RUN apt-get update \
     #
     # Verify git, common tools / libs installed, add/modify non-root user, optionally install zsh
     && apt-get -y install --no-install-recommends curl ca-certificates 2>&1 \
-    #&& curl -sSL  ${COMMON_SCRIPT_SOURCE} -o /tmp/common-setup.sh \
-    #&& ([ "${COMMON_SCRIPT_SHA}" = "dev-mode" ] || (echo "${COMMON_SCRIPT_SHA} */tmp/common-setup.sh" | sha256sum -c -)) \
+    && curl -sSL  ${COMMON_SCRIPT_SOURCE} -o /tmp/common-setup.sh \
+    && ([ "${COMMON_SCRIPT_SHA}" = "dev-mode" ] || (echo "${COMMON_SCRIPT_SHA} */tmp/common-setup.sh" | sha256sum -c -)) \
     && /bin/bash /tmp/common-setup.sh "${INSTALL_ZSH}" "${USERNAME}" "${USER_UID}" "${USER_GID}" "${UPGRADE_PACKAGES}" \
     && rm /tmp/common-setup.sh \
     #
@@ -63,12 +68,6 @@ RUN apt-get update \
     # Tactically remove imagemagick due to https://security-tracker.debian.org/tracker/CVE-2019-10131
     # Can leave in Dockerfile once upstream base image moves to > 7.0.7-28.
     && apt-get purge -y imagemagick imagemagick-6-common \
-    #
-    # Install eslint globally
-    && sudo -u ${USERNAME} npm install -g eslint \
-    #
-    # Install @vue/cli globally
-    && sudo -u ${USERNAME} npm install -g @vue/cli@${VUE_CLI_VERSION} \
     #
     # Clean up
     && apt-get autoremove -y \

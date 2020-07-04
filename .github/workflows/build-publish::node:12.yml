@@ -1,0 +1,17 @@
+name: Build and Publish NodeJs v12 Image
+
+on:
+  push:
+    branches: [ master ]
+    paths: 
+      - 'containers/node-12/.devcontainer/Dockerfile'
+      - 'script-library/debian-setup.sh'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      working-directory: containers/node-12/.devcontainer
+      run: docker build . --file Dockerfile --tag node:12

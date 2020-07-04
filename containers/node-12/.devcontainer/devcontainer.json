@@ -1,0 +1,9 @@
+{
+    "name": "NodeJS 12",
+    "dockerFile": "Dockerfile",
+    "workspaceFolder": "/workspace",
+    "settings": { 
+		"terminal.integrated.shell.linux": "/bin/zsh"
+	},
+    "remoteUser": "node"
+}

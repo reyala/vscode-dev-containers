@@ -1,2 +1,2 @@
 # devcontainers
-Development Environments for VS Code +
+Development Environments for VS Code
