@@ -14,7 +14,9 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Docker login
-        run: docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+        echo "${{ secrets.DOCKER_PASSWORD }}" > ~/GH_TOKEN.txt
+        cat ~/GH_TOKEN.txt | docker login docker.pkg.github.com -u mdhthahmd --password-stdin
       - name: Build
         working-directory: containers/node-12/.devcontainer
         run: docker build -t back .
