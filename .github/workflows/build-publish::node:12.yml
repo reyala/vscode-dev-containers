@@ -12,11 +12,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build and Push the Docker image
-      working-directory: containers/node-12/.devcontainer
-      run: |
-        docker build . --file Dockerfile --tag docker.pkg.github.com/reyala/vscode-dev-containers/node:12
-        docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USERNAME }} --password-stdin ${{ secrets.DOCKER_PASSWORD }}
-        docker push docker.pkg.github.com/reyala/vscode-dev-containers/node:12
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: docker login docker.pkg.github.com -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build
+        working-directory: containers/node-12/.devcontainer
+        run: docker build -t back .
+      - name: Push
+        run: |
+          docker push docker.pkg.github.com/reyala/vscode-dev-containers/node:12
+         
   
