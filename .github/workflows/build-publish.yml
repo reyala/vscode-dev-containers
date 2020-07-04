@@ -1,0 +1,25 @@
+name: Build and Publish Devcontainer Image
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build the Docker image
+      working-directory: nodejs(nvm)-vue-cli
+      run: docker build . --file Dockerfile --tag reyala/node:12.erbium-nvm-vuecli-4.4.6
+      
+  #publish:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Publish the Docker image
+  #      run: | 
+  #        docker login --name --password |
+  #          docker publish --registry
+        
+      
+      
