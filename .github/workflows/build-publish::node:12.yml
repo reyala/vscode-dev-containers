@@ -6,6 +6,7 @@ on:
     paths: 
       - 'containers/node-12/.devcontainer/Dockerfile'
       - 'script-library/debian-setup.sh'
+      - '.github/workflows/build-publish::node12.yml'
 
 jobs:
   build:
