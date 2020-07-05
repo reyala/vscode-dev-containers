@@ -70,7 +70,7 @@ RUN apt-get update \
     && apt-get purge -y imagemagick imagemagick-6-common \
     #
     # Install Eslint
-    sudo -u ${USERNAME} npm install -g @vue/cli@${VUE_CLI_VERSION} \
+    sudo -u ${USERNAME} npm install -g eslint \
     #
     # Clean up
     && apt-get autoremove -y \
