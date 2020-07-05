@@ -69,6 +69,9 @@ RUN apt-get update \
     # Can leave in Dockerfile once upstream base image moves to > 7.0.7-28.
     && apt-get purge -y imagemagick imagemagick-6-common \
     #
+    # Install Eslint
+    sudo -u ${USERNAME} npm install -g @vue/cli@${VUE_CLI_VERSION} \
+    #
     # Clean up
     && apt-get autoremove -y \
     && apt-get clean -y \
