@@ -5,7 +5,7 @@
 
 # To fully customize the contents of this image, use the following Dockerfile instead:
 # https://github.com/reyala/dev-containers/node-12/Dockerfile
-FROM docker.pkg.github.com/reyala/vscode-dev-envs/node:12
+FROM docker.pkg.github.com/reyala/vscode-dev-containers/node:12
 
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -46,8 +46,3 @@ RUN apt-get update \
    && rm -rf /var/lib/apt/lists/*
 
 ENV DEBIAN_FRONTEND=dialog
-
-
-
-
-

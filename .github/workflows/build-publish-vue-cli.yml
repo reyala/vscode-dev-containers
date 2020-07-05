@@ -1,0 +1,22 @@
+name: Build and Publish Vue CLI Image
+on:
+  push:
+    branches: [ master ]
+    paths: 
+      - 'containers/vue-cli/.devcontainer/Dockerfile'
+      - '.github/workflows/build-publish.yml'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Docker login
+        run: |
+          echo "${{ secrets.PUBLISH_TOKEN }}" > ~/PUBLISH_TOKEN.txt
+          cat ~/PUBLISH_TOKEN.txt | docker login docker.pkg.github.com -u mdhthahmd --password-stdin
+      - name: Build
+        working-directory: containers/vue-cli/.devcontainer
+        run: docker build -t docker.pkg.github.com/reyala/vscode-dev-containers/vue-cli:4.4.6 .
+      - name: Push
+        run: |
+          docker push docker.pkg.github.com/reyala/vscode-dev-containers/vue-cli:4.4.6
