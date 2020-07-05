@@ -21,7 +21,7 @@ RUN if [ "$USER_GID" != "1000" ] || [ "$USER_UID" != "1000" ]; then \
     fi
 
 ENV DEBIAN_FRONTEND=noninteractive
-#
+
 # Install Vue CLI
 RUN sudo -u ${USERNAME} npm install -g @vue/cli@${VUE_CLI_VERSION}
   
